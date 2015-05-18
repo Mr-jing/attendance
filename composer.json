@@ -1,0 +1,15 @@
+{
+    "require": {
+        "illuminate/database": "4.1",
+        "nesbot/carbon": "1.16",
+        "noahbuscher/macaw": "dev-master"
+    },
+	"autoload": {
+        "psr-4": {
+			"App\\": "app/"
+		},
+		"files": [
+            "app/functions.php"
+        ]
+    }
+}

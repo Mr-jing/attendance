@@ -1,0 +1,15 @@
+body {
+    padding-top: 85px;
+}
+
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+}
+
+input {
+    margin-bottom: 15px;
+}
+button {
+    margin-top: 20px;
+}
