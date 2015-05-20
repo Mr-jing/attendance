@@ -6,15 +6,17 @@ use App\Models\Attendance\WorkdayAttendance;
 use App\Models\Attendance\HolidayAttendance;
 
 
-class RecordCreator {
+class RecordCreator
+{
 
 
-    public static function create($data) {
+    public static function create($data)
+    {
         $record = Record::where('job_num', $data['job_num'])
-                ->where('year', $data['year'])
-                ->where('month', $data['month'])
-                ->where('day', $data['day'])
-                ->first();
+            ->where('year', $data['year'])
+            ->where('month', $data['month'])
+            ->where('day', $data['day'])
+            ->first();
         if (empty($record)) {
             $record = new Record();
         }

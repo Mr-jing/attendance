@@ -5,7 +5,8 @@ namespace App\Models\Attendance;
 use Carbon\Carbon;
 
 
-abstract class Attendance {
+abstract class Attendance
+{
 
     // 正常
     const NORMAL = 0;
@@ -38,23 +39,27 @@ abstract class Attendance {
     protected $endTime;
 
 
-    public function __construct($startTime, $endTime) {
+    public function __construct($startTime, $endTime)
+    {
         $this->startTime = '' === $startTime ? null : $startTime;
         $this->endTime = '' === $endTime ? null : $endTime;
     }
 
 
-    public function getStartTime() {
+    public function getStartTime()
+    {
         return $this->startTime;
     }
 
 
-    public function getEndTime() {
+    public function getEndTime()
+    {
         return $this->endTime;
     }
 
 
-    public static function getFriendlyStatus($status) {
+    public static function getFriendlyStatus($status)
+    {
         $ret = '';
         switch ($status) {
             case self::NORMAL:
@@ -87,7 +92,7 @@ abstract class Attendance {
 
     /**
      * 获取全天上班时长
-     * 
+     *
      * @return int
      */
     abstract public function getWorkDuration();
@@ -95,7 +100,7 @@ abstract class Attendance {
 
     /**
      * 获取加班时长
-     * 
+     *
      * @return int
      */
     abstract public function getOvertime();
@@ -103,7 +108,7 @@ abstract class Attendance {
 
     /**
      * 获取开始加班的时间
-     * 
+     *
      * @return string|null
      */
     abstract public function getOvertimeStartTime();
@@ -111,7 +116,7 @@ abstract class Attendance {
 
     /**
      * 获取考勤状态
-     * 
+     *
      * @return int
      */
     abstract public function getStatus();
@@ -119,12 +124,13 @@ abstract class Attendance {
 
     /**
      * 获取上午上班时长
-     * 
+     *
      * @param string $start
      * @param string $end
      * @return int
      */
-    public static function getAmWorkDuration($start, $end) {
+    public static function getAmWorkDuration($start, $end)
+    {
         if (is_null($start) || is_null($end) || '' === $start || '' === $end) {
             return 0;
         }
@@ -156,12 +162,13 @@ abstract class Attendance {
 
     /**
      * 获取下午上班时长
-     * 
+     *
      * @param string $start
      * @param string $end
      * @return int
      */
-    public static function getPmWorkDuration($start, $end) {
+    public static function getPmWorkDuration($start, $end)
+    {
         if (is_null($start) || is_null($end) || '' === $start || '' === $end) {
             return 0;
         }

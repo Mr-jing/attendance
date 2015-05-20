@@ -5,15 +5,17 @@ namespace App\Models\Attendance;
 use Carbon\Carbon;
 
 
-class HolidayAttendance extends Attendance {
+class HolidayAttendance extends Attendance
+{
 
 
     /**
      * 获取全天上班时长
-     * 
+     *
      * @return int
      */
-    public function getWorkDuration() {
+    public function getWorkDuration()
+    {
         $start = $this->startTime;
         $end = $this->endTime;
 
@@ -23,10 +25,11 @@ class HolidayAttendance extends Attendance {
 
     /**
      * 获取加班时长
-     * 
+     *
      * @return int
      */
-    public function getOvertime() {
+    public function getOvertime()
+    {
         // 休息日加班时长就等于全天工作时长
         return self::getWorkDuration();
     }
@@ -34,10 +37,11 @@ class HolidayAttendance extends Attendance {
 
     /**
      * 获取考勤状态
-     * 
+     *
      * @return int
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         $start = $this->startTime;
         $end = $this->endTime;
 
@@ -60,10 +64,11 @@ class HolidayAttendance extends Attendance {
 
     /**
      * 获取开始加班的时间
-     * 
+     *
      * @return string|null
      */
-    public function getOvertimeStartTime() {
+    public function getOvertimeStartTime()
+    {
         if (is_null($this->startTime) || is_null($this->endTime)) {
             return null;
         }

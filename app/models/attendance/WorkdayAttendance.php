@@ -5,15 +5,17 @@ namespace App\Models\Attendance;
 use Carbon\Carbon;
 
 
-class WorkdayAttendance extends Attendance {
+class WorkdayAttendance extends Attendance
+{
 
 
     /**
      * 获取全天上班时长
-     * 
+     *
      * @return int
      */
-    public function getWorkDuration() {
+    public function getWorkDuration()
+    {
         $start = $this->startTime;
         $end = $this->endTime;
 
@@ -23,10 +25,11 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 获取加班时长
-     * 
+     *
      * @return int
      */
-    public function getOvertime() {
+    public function getOvertime()
+    {
         $start = $this->startTime;
         $end = $this->endTime;
 
@@ -53,11 +56,12 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 获取正常下班时间
-     * 
+     *
      * @param string $start
      * @return Carbon\Carbon
      */
-    public static function getAllowableClosingTime($start) {
+    public static function getAllowableClosingTime($start)
+    {
         $startTime = Carbon::parse($start);
 
         $minComeTimeCarbon = Carbon::parse(self::$minComeTime);
@@ -78,10 +82,11 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 获取考勤状态
-     * 
+     *
      * @return int
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         $start = $this->startTime;
         $end = $this->endTime;
 
@@ -106,10 +111,11 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 获取开始加班的时间
-     * 
+     *
      * @return string|null
      */
-    public function getOvertimeStartTime() {
+    public function getOvertimeStartTime()
+    {
         if (is_null($this->startTime) || is_null($this->endTime)) {
             return null;
         }
@@ -126,11 +132,12 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 是否迟到
-     * 
+     *
      * @param string $start
      * @return boolean
      */
-    public static function isBeLate($start) {
+    public static function isBeLate($start)
+    {
         $startTime = Carbon::parse($start);
         $maxComeTime = Carbon::parse(self::$maxComeTime);
 
@@ -144,12 +151,13 @@ class WorkdayAttendance extends Attendance {
 
     /**
      * 是否早退
-     * 
+     *
      * @param string $start
      * @param string $end
      * @return boolean
      */
-    public static function isLeaveEarly($start, $end) {
+    public static function isLeaveEarly($start, $end)
+    {
         // 正常下班时间
         $normalTime = self::getAllowableClosingTime($start);
 

@@ -4,12 +4,13 @@ require 'start.php';
 
 define('ROOT_PATH', __DIR__);
 define('APP_PATH', ROOT_PATH . '/app');
-define('BASE_URL', 'http://127.0.0.1/a');
+define('BASE_URL', 'http://10.0.119.104/a');
 define('PUB_URL', BASE_URL . '/public');
 define('VIEW_PATH', APP_PATH . '/views');
 
 use NoahBuscher\Macaw\Macaw;
 
+Macaw::get('/a/', 'App\Controllers\RecordController@getRecord');
 Macaw::get('/a/login', 'App\Controllers\PassportController@getLogin');
 Macaw::post('/a/login', 'App\Controllers\PassportController@postLogin');
 Macaw::post('/a/logout', 'App\Controllers\PassportController@postLogout');

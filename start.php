@@ -21,11 +21,11 @@ require 'vendor' . DS . 'autoload.php';
 $database = array(
     'driver' => 'mysql',
     'host' => '127.0.0.1',
-    'database' => 'test',
+    'database' => 'attendance',
     'username' => 'root',
-    'password' => '',
+    'password' => '123456',
     'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
+    'collation' => 'utf8_general_ci',
     'prefix' => '',
 );
 

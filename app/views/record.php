@@ -11,7 +11,7 @@
           <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body style="padding-top: 50px;">
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -88,17 +88,20 @@
                     </table>
                 </div>
 
-                <h2>是否全勤（下月1号统计）：<?= $allTsutomu ?></h2>
+                <h2>是否全勤：<?= $allTsutomu ?></h2>
 
                 <h2>加班申请模板：</h2>
                 <form>
                     <textarea class="form-control" rows="10">
                         <?php
                         foreach ($overtimeRecords as $record) :
+                            $month = sprintf('%02d', $record['month']);
                             $day = sprintf('%02d', $record['day']);
-                            $overtime = intval($record['overtime'] / 3600);
+                            $overtime = sprintf('%.1f', $record['overtime'] / 3600);
+                            $overtimeStart = substr($record['overtime_start'], 0, strrpos($record['overtime_start'], ':'));
+                            $endTime = substr($record['end_time'], 0, strrpos($record['end_time'], ':'));
                             ?>
-                            <?php echo "{$record['year']}-{$record['month']}-{$day}   {$record['overtime_start']}   {$record['end_time']}   {$overtime}\n"; ?>
+                            <?php echo "{$record['year']}-{$month}-{$day}   {$overtimeStart}   {$endTime}   {$overtime}\n"; ?>
                         <?php endforeach; ?>
                     </textarea>
                 </form>
@@ -107,9 +110,12 @@
                     <textarea class="form-control" rows="10">
                         <?php
                         foreach ($mealAllowanceRecords as $record) :
+                            $month = sprintf('%02d', $record['month']);
                             $day = sprintf('%02d', $record['day']);
+                            $overtimeStart = substr($record['overtime_start'], 0, strrpos($record['overtime_start'], ':'));
+                            $endTime = substr($record['end_time'], 0, strrpos($record['end_time'], ':'));
                             ?>
-                            <?php echo "{$user->name}  {$user->job_num}  {$record['year']}-{$record['month']}-{$day}   {$record['overtime_start']} 至 {$record['end_time']}\n"; ?>
+                            <?php echo "{$user->name}  {$user->job_num}  {$record['year']}-{$month}-{$day}   {$overtimeStart} 至 {$endTime}\n"; ?>
                         <?php endforeach; ?>
                     </textarea>
                 </form>
@@ -120,8 +126,8 @@
         <script type="text/javascript" src="<?= PUB_URL ?>/js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="<?= PUB_URL ?>/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('#select-month').change(function() {
+            $(document).ready(function () {
+                $('#select-month').change(function () {
                     var url = '<?= BASE_URL ?>';
                     var year = $('#select-year').val();
                     var month = $(this).val();

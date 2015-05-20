@@ -65,9 +65,6 @@
                 <strong>熊晶</strong><br />
                 <a href="mailto:king.xiong@transn.com">king.xiong@transn.com</a>
             </p>
-            <p class="panel panel-default panel-body">
-                项目空间由<a href="http://www.mopaas.com/">MoPaas</a>免费提供
-            </p>
         </div>
         <script type="text/javascript" src="<?= PUB_URL ?>/js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="<?= PUB_URL ?>/js/bootstrap.min.js"></script>

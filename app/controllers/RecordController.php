@@ -69,7 +69,6 @@ class RecordController {
             'job_num' => intval($_POST['job_num']),
             'name' => trim($_POST['name']),
         ));
-        return;
         $records = json_decode($_POST['records'], true);
         foreach ($records as $record) {
             $record['job_num'] = intval($_POST['job_num']);

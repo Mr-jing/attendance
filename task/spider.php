@@ -4,10 +4,12 @@ ignore_user_abort();
 set_time_limit(0);
 
 date_default_timezone_set('Asia/Shanghai');
+
 require '../vendor/autoload.php';
+require '../start.php';
 
 use Carbon\Carbon;
-
+use App\Models\User;
 
 class Spider {
 
@@ -112,34 +114,35 @@ function post($url, $data) {
 
 
 function run() {
-    $jobNums = range(1380, 11000);
+    $jobNums = User::lists('job_num');
+    // $jobNums = array(5711);
 
     $year = intval(date('Y'));
     $month = intval(date('m'));
 
-    $year = 2015;
-    $month = 4;
+    // $year = 2015;
+    // $month = 4;
 
     foreach ($jobNums as $jobNum) {
         // for ($month = 4; $month >= 1; $month--) {
-            var_dump("{$jobNum} {$year} {$month}");
+        var_dump("{$jobNum} {$year} {$month}");
 
-            $spider = new Spider($jobNum, $year, $month);
+        $spider = new Spider($jobNum, $year, $month);
 
-            $name = $spider->getName();
-            if (empty($name)) {
-                continue;
-            }
+        $name = $spider->getName();
+        if (empty($name)) {
+            continue;
+        }
 
-            $data = array(
-                'job_num' => $jobNum,
-                'name' => $name,
-                'year' => $spider->getYear(),
-                'month' => $spider->getMonth(),
-                'records' => json_encode($spider->getRecords()),
-            );
+        $data = array(
+            'job_num' => $jobNum,
+            'name' => $name,
+            'year' => $spider->getYear(),
+            'month' => $spider->getMonth(),
+            'records' => json_encode($spider->getRecords()),
+        );
 
-            post('http://127.0.0.1/a/record', $data);
+        post('http://127.0.0.1/a/record', $data);
         // }
     }
 }

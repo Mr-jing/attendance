@@ -3,10 +3,12 @@
 namespace App\Models;
 
 
-class UserCreator {
+class UserCreator
+{
 
 
-    public static function create($data) {
+    public static function create($data)
+    {
         $user = User::where('job_num', $data['job_num'])->first();
         if (empty($user)) {
             $user = new User();
