@@ -1,2 +1,5 @@
+/lumen.log
+/vendor
+.env
 .idea
-vendor
+/.env.example
