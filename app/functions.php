@@ -1,12 +1,13 @@
 <?php
 
-
-function getFriendlyStatus($status) {
+function getFriendlyStatus($status)
+{
     return App\Models\Attendance\Attendance::getFriendlyStatus($status);
 }
 
 
-function cssStatus($status) {
+function cssStatus($status)
+{
     $ret = '';
     switch ($status) {
         case App\Models\Attendance\Attendance::ABNORMAL:

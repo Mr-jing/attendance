@@ -2,6 +2,7 @@
 
 define('ROUTE_BASE', 'attendance/public');
 
+
 $app->get(ROUTE_BASE . '/index', array(
     'as' => 'home',
     'uses' => 'RecordController@getRecord',
@@ -14,15 +15,15 @@ $app->get(ROUTE_BASE . '/about', array(
 
 $app->get(ROUTE_BASE . '/login', array(
     'as' => 'login',
-    'uses' => 'PassportController@getLogin',
+    'uses' => 'App\Http\Controllers\PassportController@getLogin',
 ));
 
 $app->post(ROUTE_BASE . '/login', array(
-    'uses' => 'PassportController@postLogin',
+    'uses' => 'App\Http\Controllers\PassportController@postLogin',
 ));
 
 $app->post(ROUTE_BASE . '/logout', array(
-    'uses' => 'PassportController@postLogout',
+    'uses' => 'App\Http\Controllers\PassportController@postLogout',
 ));
 
 $app->get(ROUTE_BASE . '/record', array(
