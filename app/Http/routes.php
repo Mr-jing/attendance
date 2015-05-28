@@ -2,39 +2,34 @@
 
 define('ROUTE_BASE', 'attendance/public');
 
-
-$app->get(ROUTE_BASE . '/index', array(
+// 首页
+$app->get(ROUTE_BASE . '/', array(
     'as' => 'home',
-    'uses' => 'RecordController@getRecord',
+    'uses' => 'App\Http\Controllers\RecordController@getIndex',
 ));
 
-$app->get(ROUTE_BASE . '/about', array(
-    'as' => 'about',
-    'uses' => 'OtherController@getAbout',
-));
-
+// 登录页面
 $app->get(ROUTE_BASE . '/login', array(
     'as' => 'login',
     'uses' => 'App\Http\Controllers\PassportController@getLogin',
 ));
 
+// 登录操作
 $app->post(ROUTE_BASE . '/login', array(
     'uses' => 'App\Http\Controllers\PassportController@postLogin',
 ));
 
+// 退出操作
 $app->post(ROUTE_BASE . '/logout', array(
     'uses' => 'App\Http\Controllers\PassportController@postLogout',
 ));
 
-$app->get(ROUTE_BASE . '/record', array(
-    'as' => 'record',
-    'uses' => 'RecordController@getRecord',
+// 考勤记录页面
+$app->get(ROUTE_BASE . '/record/{year:\d{4}}/{month:\d{1,2}}', array(
+    'uses' => 'App\Http\Controllers\RecordController@getRecord',
 ));
 
-$app->get(ROUTE_BASE . '/record/([0-9]{4})/([0-9]{1,2})', array(
-    'uses' => 'RecordController@getIndex',
-));
-
-$app->post(ROUTE_BASE . '/record', array(
-    'uses' => 'RecordController@postStore',
-));
+// 关于页面
+$app->get(ROUTE_BASE . '/about', function () {
+    return view('about');
+});

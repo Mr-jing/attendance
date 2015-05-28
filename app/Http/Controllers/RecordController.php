@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Statistics;
@@ -10,37 +10,32 @@ use App\Models\UserCreator;
 use Carbon\Carbon;
 
 
-class RecordController {
+class RecordController extends Controller
+{
 
-
-    public function getRecord() {
-        if (!isset($_COOKIE['job_num']) ||
-                !is_numeric($_COOKIE['job_num'])) {
-            header('Location:login');
-            exit;
-        }
-        header('Location:' . BASE_URL . '/record/' . date('Y/m'));
-        exit;
+    public function __construct()
+    {
     }
 
 
-    public function getIndex() {
-        if (!isset($_COOKIE['job_num']) ||
-                !is_numeric($_COOKIE['job_num'])) {
-            header('Location:login');
-            exit;
+    public function getIndex()
+    {
+        $jobNum = \Request::cookie('job_num');
+        if (!isset($jobNum) || !is_numeric($jobNum)) {
+            return redirect('/login');
+        }
+        return redirect('/record/' . date('Y/m'));
+    }
+
+
+    public function getRecord($year, $month)
+    {
+        $jobNum = \Request::cookie('job_num');
+        if (!isset($jobNum) || !is_numeric($jobNum)) {
+            return redirect('/login');
         }
 
-        $user = User::find($_COOKIE['job_num']);
-        if (empty($user)) {
-            header('Location:login');
-            exit;
-        }
-
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $yearAndMonth = array_slice(explode('/', $uri), -2);
-        $year = $yearAndMonth[0];
-        $month = $yearAndMonth[1];
+        $user = User::findOrFail($jobNum);
 
         $statistics = new Statistics($user, $year, $month);
         $records = $statistics->getRecords();
@@ -53,58 +48,38 @@ class RecordController {
             $allTsutomu = '还没有到统计的时候';
         }
 
-        require VIEW_PATH . '/record.php';
+        $vars = compact(
+            'user',
+            'month',
+            'records',
+            'overtimeRecords',
+            'mealAllowanceRecords',
+            'allTsutomu'
+        );
+        return view('record', $vars);
     }
 
 
-    public function postStore() {
-        if (!isset($_POST['job_num']) ||
-                !isset($_POST['name']) ||
-                !isset($_POST['year']) ||
-                !isset($_POST['month']) ||
-                !isset($_POST['records'])) {
-            exit;
+    public function postStore()
+    {
+        if (!\Request::has('job_num') ||
+            !\Request::has('name') ||
+            !\Request::has('year') ||
+            !\Request::has('month') ||
+            !\Request::has('records')
+        ) {
+            return;
         }
         UserCreator::create(array(
-            'job_num' => intval($_POST['job_num']),
-            'name' => trim($_POST['name']),
+            'job_num' => intval(\Request::input('job_num')),
+            'name' => trim(\Request::input('name')),
         ));
-        $records = json_decode($_POST['records'], true);
+        $records = json_decode(\Request::input('records'), true);
         foreach ($records as $record) {
-            $record['job_num'] = intval($_POST['job_num']);
-            $record['year'] = intval($_POST['year']);
-            $record['month'] = intval($_POST['month']);
+            $record['job_num'] = intval(\Request::input('job_num'));
+            $record['year'] = intval(\Request::input('year'));
+            $record['month'] = intval(\Request::input('month'));
             RecordCreator::create($record);
         }
     }
-
-
-    public function postAjaxMonth() {
-        if (isset($_REQUEST['year'])) {
-            $year = $_REQUEST['year'];
-        } else {
-            $year = date('Y');
-        }
-
-        $user = User::find($_COOKIE['job_num']);
-        if (empty($user)) {
-            $ret = json_encode(array(
-                'status' => false,
-                'msg' => '请先登录',
-                'data' => array(),
-            ));
-            exit($ret);
-        }
-
-        $months = Record::where('job_num', $user->job_num)
-                ->where('year', $year)
-                ->lists('month');
-        $ret = json_encode(array(
-            'status' => true,
-            'msg' => '获取成功',
-            'data' => array_unique($months),
-        ));
-        exit($ret);
-    }
-
 }
