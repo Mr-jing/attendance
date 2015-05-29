@@ -1,48 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="UTF-8">
-    <title>首页</title>
-    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body style="padding-top: 50px;">
+@extends('layout.default')
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand">考勤 Helper</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="<?= url('/record'); ?>">首页</a></li>
-                <li><a href="<?= url('/about'); ?>">关于</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <?php if (empty($_COOKIE['job_num'])) : ?>
-                <li><a href="<?= url('/login'); ?>">登录</a></li>
-                <?php else: ?>
-                <form class="navbar-form navbar-left" method="POST" action="<?= url('/logout'); ?>">
-                    <input type="submit" class="btn btn-default" value="退出"/>
-                </form>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div>
-</nav>
 
-<div class="container">
+@section('title')记录
+@stop
+
+<div class="container" style="margin-top: 50px;">
     <h2>考勤记录（第二天凌晨更新）：</h2>
 
     <form class="form-inline" style="margin: 10px 0;">
@@ -126,17 +88,15 @@
 
 
 </div>
-<script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#select-month').change(function () {
-            var url = '';
-            var year = $('#select-year').val();
-            var month = $(this).val();
-            window.location.href = url + '/record/' + year + '/' + month;
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#select-month').change(function () {
+                var url = '';
+                var year = $('#select-year').val();
+                var month = $(this).val();
+                window.location.href = url + '/record/' + year + '/' + month;
+            });
         });
-    });
-</script>
-</body>
-</html>
+    </script>
+@stop

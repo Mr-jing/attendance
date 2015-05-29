@@ -56,7 +56,7 @@ class RecordController extends Controller
             'mealAllowanceRecords',
             'allTsutomu'
         );
-        return view('record', $vars);
+        return view('record.record', $vars);
     }
 
 
