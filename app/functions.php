@@ -23,3 +23,22 @@ function cssStatus($status)
     }
     return $ret;
 }
+
+function post($url, $data)
+{
+    $cu = curl_init();
+
+    $options = array(
+        CURLOPT_URL => $url,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data,
+    );
+
+    curl_setopt_array($cu, $options);
+    curl_exec($cu);
+    $code = curl_getinfo($cu, CURLINFO_HTTP_CODE);
+    curl_close($cu);
+
+    return $code;
+}
+
