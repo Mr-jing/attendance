@@ -23,6 +23,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+DB::connection()->enableQueryLog();
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -43,6 +45,12 @@ $app->singleton(
     'Illuminate\Contracts\Console\Kernel',
     'App\Console\Kernel'
 );
+
+$app->singleton('RedisSingleton', function () {
+    $redis = new Redis();
+    $redis->connect(getenv('REDIS_HOST'), getenv('REDIS_PORT'));
+    return $redis;
+});
 
 /*
 |--------------------------------------------------------------------------

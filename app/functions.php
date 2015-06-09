@@ -42,3 +42,33 @@ function post($url, $data)
     return $code;
 }
 
+
+function last_week_days()
+{
+    // 上周的第一天
+    $date = \Carbon\Carbon::now()->subWeek()->startOfWeek();
+
+    $dates = array();
+    $dates[] = $date->copy();
+    for ($i = 2; $i <= 7; $i++) {
+        $dates[] = $date->addDay()->copy();
+    }
+    return $dates;
+}
+
+
+function last_month_days()
+{
+    // 本月第一天再减去一天，就是上月的最后一天。最后重置为当月第一天。
+    $date = \Carbon\Carbon::now()->startOfMonth()->subDay()->startOfMonth();
+
+    // 当月总天数
+    $days = $date->daysInMonth;
+
+    $dates = array();
+    $dates[] = $date->copy();
+    for ($i = 2; $i <= $days; $i++) {
+        $dates[] = $date->addDay()->copy();
+    }
+    return $dates;
+}

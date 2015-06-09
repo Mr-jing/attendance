@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\SpiderCommand',
+        'App\Console\Commands\RankCommand',
     ];
 
     /**
