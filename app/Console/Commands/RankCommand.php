@@ -44,21 +44,27 @@ class RankCommand extends Command
 
         $year = $this->option('year');
         $month = $this->option('month');
+        $isAll = $this->option('all');
 
         if (empty($year) || empty($month)) {
             $date = Carbon::yesterday();
             $year = $date->year;
             $month = $date->month;
         }
+        $this->info("year: {$year} month: {$month} isAll: {$isAll}");
 
         $start_time = microtime(true);
 
         // 查询加班的记录
-        $records = Record::where('year', $year)
-            ->where('month', $month)
-            ->where('overtime', '>', 0)
-            ->get()->toArray();
-
+        if ($isAll) {
+            $records = Record::where('overtime', '>', 0)
+                ->get()->toArray();
+        } else {
+            $records = Record::where('year', $year)
+                ->where('month', $month)
+                ->where('overtime', '>', 0)
+                ->get()->toArray();
+        }
 
         $redis = \App::make('RedisSingleton');
         $rank = new Rank($redis);
@@ -107,6 +113,7 @@ class RankCommand extends Command
         return [
             ['year', 'y', InputOption::VALUE_OPTIONAL, '', null],
             ['month', 'm', InputOption::VALUE_OPTIONAL, '', null],
+            ['all', null, InputOption::VALUE_NONE, '', null],
         ];
     }
 
