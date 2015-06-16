@@ -4,6 +4,8 @@
 @section('title')记录
 @stop
 
+
+@section('content');
 <div class="container" style="margin-top: 50px;">
     <h2>考勤记录（第二天凌晨更新）：</h2>
 
@@ -85,9 +87,9 @@
                     </textarea>
     </form>
     <?php endif; ?>
-
-
 </div>
+@stop
+
 @section('script')
     <script type="text/javascript">
         $(document).ready(function () {

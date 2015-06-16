@@ -14,6 +14,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="{{ (\Request::is('record*') ? ' active ' : '') }}"><a href="{{ url('/') }}">首页</a></li>
+                <li class="{{ (\Request::is('rank') ? ' active ' : '') }}"><a href="{{ url('/rank') }}">榜单</a></li>
                 <li class="{{ (\Request::is('about') ? ' active ' : '') }}"><a href="{{ url('/about') }}">关于</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

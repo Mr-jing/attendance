@@ -29,6 +29,12 @@ $app->get(ROUTE_BASE . '/record/{year:\d{4}}/{month:\d{1,2}}', array(
     'uses' => 'App\Http\Controllers\RecordController@getRecord',
 ));
 
+// 榜单页面
+$app->get(ROUTE_BASE . '/rank', array(
+    'as' => 'rank',
+    'uses' => 'App\Http\Controllers\PageController@getRank',
+));
+
 // 关于页面
 $app->get(ROUTE_BASE . '/about', function () {
     return view('about');

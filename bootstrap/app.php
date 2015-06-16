@@ -23,7 +23,7 @@ $app->withFacades();
 
 $app->withEloquent();
 
-DB::connection()->enableQueryLog();
+\DB::connection()->enableQueryLog();
 
 /*
 |--------------------------------------------------------------------------
