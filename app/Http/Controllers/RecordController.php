@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Statistics;
-use App\Models\Record;
-use App\Models\RecordCreator;
-use App\Models\UserCreator;
 use Carbon\Carbon;
 
 
@@ -57,29 +54,5 @@ class RecordController extends Controller
             'allTsutomu'
         );
         return view('record.record', $vars);
-    }
-
-
-    public function postStore()
-    {
-        if (!\Request::has('job_num') ||
-            !\Request::has('name') ||
-            !\Request::has('year') ||
-            !\Request::has('month') ||
-            !\Request::has('records')
-        ) {
-            return;
-        }
-        UserCreator::create(array(
-            'job_num' => intval(\Request::input('job_num')),
-            'name' => trim(\Request::input('name')),
-        ));
-        $records = json_decode(\Request::input('records'), true);
-        foreach ($records as $record) {
-            $record['job_num'] = intval(\Request::input('job_num'));
-            $record['year'] = intval(\Request::input('year'));
-            $record['month'] = intval(\Request::input('month'));
-            RecordCreator::create($record);
-        }
     }
 }

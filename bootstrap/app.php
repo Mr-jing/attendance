@@ -23,8 +23,9 @@ $app->withFacades();
 
 $app->withEloquent();
 
-\DB::connection()->enableQueryLog();
-
+if ('true' === getenv('APP_DEBUG')) {
+    \DB::connection()->enableQueryLog();
+}
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use Illuminate\Support\Collection;
+
 class Statistics
 {
 
@@ -60,14 +62,28 @@ class Statistics
      */
     public function getMealAllowanceRecords()
     {
-        $result = $this->user->records()
+        // 工作日加班餐补
+        $result1 = $this->user->records()
             ->select('year', 'month', 'day', 'overtime_start', 'end_time')
             ->where('year', $this->year)
             ->where('month', $this->month)
+            ->where('is_holiday', 0)
             ->where('end_time', '>=', '20:00:00')
             ->get()
             ->toArray();
-        return $result;
+
+        // 休息日加班餐补
+        $result2 = $this->user->records()
+            ->select('year', 'month', 'day', 'overtime_start', 'end_time')
+            ->where('year', $this->year)
+            ->where('month', $this->month)
+            ->where('is_holiday', 1)
+            ->where('work_time', '>=', 3600 * 3)
+            ->get()
+            ->toArray();
+
+        $result = array_merge($result1, $result2);
+        return Collection::make($result)->sortBy('day')->toArray();
     }
 
 

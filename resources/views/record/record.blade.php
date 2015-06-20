@@ -94,10 +94,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#select-month').change(function () {
-                var url = '';
+                var url = '<?=url('/record');?>';
                 var year = $('#select-year').val();
                 var month = $(this).val();
-                window.location.href = url + '/record/' + year + '/' + month;
+                window.location.href = url + '/' + year + '/' + month;
             });
         });
     </script>

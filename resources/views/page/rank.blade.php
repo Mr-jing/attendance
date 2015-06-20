@@ -1,6 +1,6 @@
 @extends('layout.default')
 
-@section('title')记录
+@section('title')榜单
 @stop
 
 @section('style')
