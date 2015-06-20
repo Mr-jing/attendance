@@ -47,6 +47,7 @@ class SpiderCommand extends Command
         $year = $this->option('year');
         $month = $this->option('month');
 
+        $start_time = microtime(true);
 
         if (is_numeric($uid)) {
             $uids = array($uid);
@@ -58,9 +59,13 @@ class SpiderCommand extends Command
             $spider = new Spider($uid, $year, $month);
             $data = $spider->getData();
             $this->insertData($data);
+            unset($spider);
             $this->info("{$uid} {$year} {$month}");
         }
 
+        $end_time = microtime(true);
+        $exec_time = $end_time - $start_time;
+        $this->info("OK.\nexec_time: {$exec_time}\nend_at:" . date('Y-m-d H:i:s'));
     }
 
     protected function insertData($data)

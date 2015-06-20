@@ -24,6 +24,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        date_default_timezone_set('Asia/Shanghai');
+
+        $schedule->command('spider:record')
+            ->dailyAt('03:00')
+            ->sendOutputTo(storage_path() . '/logs/spider_record_' . date('Y-m-d-H-i-s') . '.txt');
+
+        $schedule->command('rank')
+            ->dailyAt('03:30')
+            ->sendOutputTo(storage_path() . '/logs/redis_rank_' . date('Y-m-d-H-i-s') . '.txt');
     }
 }

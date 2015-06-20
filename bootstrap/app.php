@@ -14,6 +14,7 @@ Dotenv::load(__DIR__ . '/../');
 | application as an "IoC" container and router for this framework.
 |
 */
+date_default_timezone_set('Asia/Shanghai');
 
 $app = new Laravel\Lumen\Application(
     realpath(__DIR__ . '/../')

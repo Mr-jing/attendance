@@ -86,8 +86,7 @@ class RankCommand extends Command
 
         $end_time = microtime(true);
         $exec_time = $end_time - $start_time;
-
-        $this->info('OK. time: ' . $exec_time);
+        $this->info("OK.\nexec_time: {$exec_time}\nend_at:" . date('Y-m-d H:i:s'));
     }
 
 
