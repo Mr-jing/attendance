@@ -3,11 +3,10 @@
 use App\Models\RecordCreator;
 use App\Models\Spider;
 use App\Models\User;
-use App\Models\UserCreator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class SpiderCommand extends Command
+class SpiderRecordCommand extends Command
 {
 
     /**
@@ -43,6 +42,9 @@ class SpiderCommand extends Command
     {
         date_default_timezone_set('Asia/Shanghai');
 
+        // 防止消耗内存
+        \DB::connection()->disableQueryLog();
+
         $uid = $this->option('uid');
         $year = $this->option('year');
         $month = $this->option('month');
@@ -59,7 +61,6 @@ class SpiderCommand extends Command
             $spider = new Spider($uid, $year, $month);
             $data = $spider->getData();
             $this->insertData($data);
-            unset($spider);
             $this->info("{$uid} {$year} {$month}");
         }
 

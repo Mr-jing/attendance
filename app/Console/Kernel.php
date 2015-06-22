@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\SpiderCommand',
+        'App\Console\Commands\SpiderRecordCommand',
+        'App\Console\Commands\SpiderUserCommand',
         'App\Console\Commands\RankCommand',
     ];
 
